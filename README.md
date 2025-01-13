@@ -1,11 +1,10 @@
 # shipping
 
-For Dockerfiles using tools from the other repositories.
+Dockerfiles using tools from the other repositories.
 
-Currently, the following:
-
-- [rvry](https://github.com/barcek/rvry), run as PID 1, for a configurable sidecar or dummy container for testing
-- [deye](https://github.com/barcek/deye), added over a Deno base to be available alongside the usual commands
+- **[rvry](#rvry)** - run as PID 1 over an Alpine base image for a configurable sidecar in a Kubernetes pod or similar, or a dummy container for test
+- **[deye](#deye)** - added over a Deno base image for availability alongside the usual command set
+- ...
 
 ## Build
 
@@ -18,15 +17,13 @@ From the root directory, for the Dockerfiles available:
 ./build.sh deye
 ```
 
-## Tools
+## rvry
 
-### rvry
-
-Source: **[rvry](https://github.com/barcek/rvry)**
+Repository: **[rvry](https://github.com/barcek/rvry)**
 
 The container entrypoint is set to rvry, running the tool as PID 1 with the default behaviour and allowing additional arguments to be passed as usual.
 
-#### Requirements
+### Requirements
 
 The tool expects at least a pseudo-tty, and needs stdin open to receive the [sign](https://github.com/barcek/rvry#defaults) key. For both requirements, using `docker run` with no additional arguments to rvry:
 
@@ -57,7 +54,7 @@ spec:
     stdin: true
 ```
 
-#### Arguments
+### Arguments
 
 Arguments to rvry can be passed via the `run` command, whether `docker run` or `docker compose run`, with `tty` and `stdin_open` set as above. For example, to print a series of ellipses, each on its own line as if logging:
 
@@ -90,13 +87,13 @@ spec:
     args: ["--mark", "...\n", "--full"]
 ```
 
-### deye
+## deye
 
-Source: **[deye](https://github.com/barcek/deye)**
+Repository: **[deye](https://github.com/barcek/deye)**
 
 The container entrypoint remains the default entrypoint for the base image, making the Deno commands available as usual and allowing for `deye` followed by its usual arguments.
 
-#### Arguments
+### Arguments
 
 Arguments to deye can be passed via the `run` command, whether `docker run` or `docker compose run`. For example, to set `--allow all` for a file named index.js in the same directory:
 
